@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مطعم أسترين | Astren Restaurant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Mobile App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a1a1a">
+
+    <style>
+      :root {
+        --font-ar: 'El Messiri', sans-serif;
+        --font-en: 'Roboto', sans-serif;
+      }
+      body {
+        background-color: #1a1a1a;
+        color: #f0f0f0;
+      }
+      body, h1, h2, h3, h4, h5, h6, .font-display {
+        font-family: var(--font-ar); /* Default to Arabic */
+      }
+      html[lang="en"] body,
+      html[lang="en"] h1,
+      html[lang="en"] h2,
+      html[lang="en"] h3,
+      html[lang="en"] h4,
+      html[lang="en"] h5,
+      html[lang="en"] h6,
+      html[lang="en"] .font-display {
+         font-family: var(--font-en);
+      }
+      .transition-all {
+        transition: all 0.3s ease-in-out;
+      }
+      @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; visibility: hidden; }
+      }
+      .animate-fadeOut {
+        animation: fadeOut 0.5s ease-in-out forwards;
+        animation-delay: 1.5s;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.5",
+    "firebase/": "https://aistudiocdn.com/firebase@^12.5.0/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
