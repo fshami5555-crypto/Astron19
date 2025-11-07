@@ -23,12 +23,14 @@ import OrderSuccess from './components/OrderSuccess';
 import UserProtectedRoute from './components/UserProtectedRoute';
 import Profile from './components/Profile';
 import MenuItemDetail from './components/MenuItemDetail';
+import DealDetail from './components/DealDetail';
 
 
 // New mobile components and hook
 import SplashScreen from './components/SplashScreen';
 import MobileHome from './components/MobileHome';
 import BottomNav from './components/BottomNav';
+import MobileHeader from './components/MobileHeader';
 import { useMediaQuery } from './hooks/useMediaQuery';
 
 const ScrollToTop = () => {
@@ -55,11 +57,11 @@ const AppContent: React.FC = () => {
         return <SplashScreen />;
     }
     
-    const mainContentStyle = isMobile ? { paddingBottom: '4rem' } : {};
+    const mainContentStyle = isMobile ? { paddingBottom: '4rem', paddingTop: '4rem' } : {};
 
     return (
         <div className="bg-[#1a1a1a] text-gray-200 min-h-screen flex flex-col">
-            {!isMobile && <Header />}
+            {isMobile ? <MobileHeader /> : <Header />}
             <main className="flex-grow" style={mainContentStyle}>
                 <Routes>
                     <Route path="/" element={isMobile ? <MobileHome /> : <Home />} />
@@ -67,6 +69,7 @@ const AppContent: React.FC = () => {
                     <Route path="/menu/:itemId" element={<MenuItemDetail />} />
                     <Route path="/offers" element={<Offers />} />
                     <Route path="/deals" element={<DailyDeals />} />
+                    <Route path="/deals/:dealId" element={<DealDetail />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/gallery" element={<Gallery />} />
                     <Route path="/contact" element={<Contact />} />

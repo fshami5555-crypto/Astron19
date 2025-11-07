@@ -1,7 +1,7 @@
-// Fix: Removed self-import of TranslatableString
+// Fix: Defined TranslatableString directly to remove circular dependency.
 export type TranslatableString = {
-  ar: string;
   en: string;
+  ar: string;
 };
 
 export interface MenuItem {
@@ -92,6 +92,7 @@ export interface SiteSettings {
     heroSubtitle: TranslatableString;
     aboutSnippet: TranslatableString;
     aboutImageUrl: string;
+    footerDescription: TranslatableString;
 }
 
 export interface AboutPageSettings {
@@ -106,4 +107,9 @@ export interface ContactPageSettings {
     phone: string;
     email: string;
     mapImageUrl: string;
+    socialLinks: {
+        facebook: string;
+        twitter: string;
+        instagram: string;
+    };
 }

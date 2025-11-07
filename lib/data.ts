@@ -17,6 +17,10 @@ export const initialSiteSettings: SiteSettings = {
         en: translations.en.ourStorySnippet as string,
     },
     aboutImageUrl: 'https://picsum.photos/seed/chef/600/400',
+    footerDescription: {
+        ar: translations.ar.footerDescription as string,
+        en: translations.en.footerDescription as string,
+    }
 };
 
 export const initialAboutSettings: AboutPageSettings = {
@@ -42,7 +46,12 @@ export const initialContactSettings: ContactPageSettings = {
     },
     phone: "+966 11 123 4567",
     email: "contact@astren.com",
-    mapImageUrl: "https://www.e-architect.com/wp-content/uploads/2021/07/riyadh-city-saudi-arabia-g240721-1.jpg"
+    mapImageUrl: "https://www.e-architect.com/wp-content/uploads/2021/07/riyadh-city-saudi-arabia-g240721-1.jpg",
+    socialLinks: {
+        facebook: "#",
+        twitter: "#",
+        instagram: "#"
+    }
 };
 
 export const initialMenuItems: MenuItem[] = [

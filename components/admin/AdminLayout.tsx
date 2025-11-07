@@ -13,6 +13,7 @@ import ManageLoyalty from './ManageLoyalty';
 import ManageAbout from './ManageAbout';
 import ManageContact from './ManageContact';
 import ManageGallery from './ManageGallery';
+import ManageFooter from './ManageFooter';
 
 const AdminLayout: React.FC = () => {
     const { t } = useTranslation();
@@ -29,6 +30,7 @@ const AdminLayout: React.FC = () => {
         { path: '/admin/about', label: t('aboutTitle') },
         { path: '/admin/contact', label: t('contactTitle') },
         { path: '/admin/gallery', label: t('galleryTitle') },
+        { path: '/admin/footer-settings', label: t('manageFooter') },
     ];
 
     const activeLinkClass = "bg-amber-500 text-white";
@@ -70,6 +72,7 @@ const AdminLayout: React.FC = () => {
                     <Route path="about" element={<ManageAbout />} />
                     <Route path="contact" element={<ManageContact />} />
                     <Route path="gallery" element={<ManageGallery />} />
+                    <Route path="footer-settings" element={<ManageFooter />} />
                 </Routes>
             </main>
         </div>

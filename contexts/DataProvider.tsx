@@ -134,7 +134,10 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     useEffect(() => {
         const settingsRef = doc(db, 'settings', 'site');
         const unsubscribe = onSnapshot(settingsRef, (doc) => {
-            setSiteSettings(doc.exists() ? (doc.data() as SiteSettings) : initialSiteSettings);
+            const data = doc.data() as Partial<SiteSettings> | undefined;
+            // Merge Firestore data with initial settings to provide defaults for any missing fields.
+            // This prevents crashes if the database schema is updated with new fields.
+            setSiteSettings({ ...initialSiteSettings, ...(data || {}) });
         });
         return () => unsubscribe();
     }, []);
@@ -142,7 +145,8 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     useEffect(() => {
         const settingsRef = doc(db, 'settings', 'about');
         const unsubscribe = onSnapshot(settingsRef, (doc) => {
-            setAboutSettings(doc.exists() ? (doc.data() as AboutPageSettings) : initialAboutSettings);
+            const data = doc.data() as Partial<AboutPageSettings> | undefined;
+            setAboutSettings({ ...initialAboutSettings, ...(data || {}) });
         });
         return () => unsubscribe();
     }, []);
@@ -150,7 +154,18 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     useEffect(() => {
         const settingsRef = doc(db, 'settings', 'contact');
         const unsubscribe = onSnapshot(settingsRef, (doc) => {
-             setContactSettings(doc.exists() ? (doc.data() as ContactPageSettings) : initialContactSettings);
+             const data = doc.data() as Partial<ContactPageSettings> | undefined;
+             // Deep merge is needed here for the nested `socialLinks` object to ensure
+             // individual social link properties also have fallbacks.
+             const mergedSettings: ContactPageSettings = {
+                 ...initialContactSettings,
+                 ...(data || {}),
+                 socialLinks: {
+                     ...initialContactSettings.socialLinks,
+                     ...(data?.socialLinks || {})
+                 }
+             };
+             setContactSettings(mergedSettings);
         });
         return () => unsubscribe();
     }, []);
