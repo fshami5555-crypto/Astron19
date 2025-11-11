@@ -7,6 +7,7 @@ import { CartProvider } from './contexts/CartContext';
 import { DataProvider } from './contexts/DataProvider';
 import { SettingsProvider } from './contexts/SettingsContext';
 import { DealProvider } from './contexts/DealContext';
+import { ToastProvider } from './contexts/ToastContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -21,9 +22,11 @@ root.render(
         <DataProvider>
           <SettingsProvider>
             <CartProvider>
-              <DealProvider>
-                <App />
-              </DealProvider>
+              <ToastProvider>
+                <DealProvider>
+                  <App />
+                </DealProvider>
+              </ToastProvider>
             </CartProvider>
           </SettingsProvider>
         </DataProvider>

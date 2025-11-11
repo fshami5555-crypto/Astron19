@@ -72,11 +72,6 @@ const DealCard: React.FC<{ deal: Offer }> = ({ deal }) => {
                 </div>
 
                 <p className="mt-2 text-gray-400">{deal.description[language]}</p>
-                {!isActive && deal.availabilityText && (
-                     <p className="mt-4 text-amber-400 font-semibold border-t border-gray-700 pt-3">
-                        {deal.availabilityText[language]}
-                    </p>
-                )}
             </div>
         </div>
     );
@@ -94,6 +89,7 @@ const DailyDeals: React.FC = () => {
           <h1 className="text-5xl font-extrabold font-display text-amber-500">{t('dailyDealsTitle')}</h1>
           <p className="mt-4 text-lg text-gray-400">{t('dailyDealsSubtitle')}</p>
         </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {dailyDeals.map((deal) => (
             <DealCard key={deal.id} deal={deal} />

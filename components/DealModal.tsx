@@ -2,15 +2,16 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DealContext } from '../contexts/DealContext';
 import { DataContext } from '../contexts/DataProvider';
 import { CartContext } from '../contexts/CartContext';
-import { AppContext } from '../contexts/AppContext';
 import { useTranslation } from '../hooks/useTranslation';
 import type { MenuItem } from '../types';
+import { ToastContext } from '../contexts/ToastContext';
 
 const DealModal: React.FC = () => {
     const { isDealModalOpen, activeDeal, closeDealModal } = useContext(DealContext);
     const { menuItems } = useContext(DataContext);
     const { addToCart, toggleCart } = useContext(CartContext);
     const { language, t } = useTranslation();
+    const { showToast } = useContext(ToastContext);
 
     const [step, setStep] = useState(1);
     const [selectedMains, setSelectedMains] = useState<MenuItem[]>([]);
@@ -28,12 +29,17 @@ const DealModal: React.FC = () => {
     if (!isDealModalOpen || !activeDeal || !activeDeal.rules) return null;
 
     const { mainCourseCount, giftOptions } = activeDeal.rules;
-    const totalSteps = mainCourseCount + 1;
+    const totalSteps = mainCourseCount + (giftOptions.length > 0 ? 1 : 0);
 
-    const mainCourseOptions = menuItems.filter(item => item.category === 'mains' || item.category === 'combo');
+    let mainCourseOptions: MenuItem[];
+    if (activeDeal.id === 'deal1') { // Combo for Two deal
+        mainCourseOptions = menuItems.filter(item => item.category === 'combo');
+    } else if (activeDeal.id === 'deal2') { // Employee Lunch deal
+        mainCourseOptions = menuItems.filter(item => item.category === 'mains');
+    } else { // Fallback for other deals like the family deal
+        mainCourseOptions = menuItems.filter(item => item.category === 'mains' || item.category === 'combo');
+    }
     
-    // FIX: Make the gift options for the family deal dynamic.
-    // Instead of relying on a hardcoded ID, it now shows all items from the 'kids' category.
     let giftItemOptions: MenuItem[];
     if (activeDeal.id === 'deal3') { // 'deal3' is the Weekend Family Deal
         giftItemOptions = menuItems.filter(item => item.category === 'kids');
@@ -45,16 +51,29 @@ const DealModal: React.FC = () => {
     const handleSelectMain = (item: MenuItem) => {
         const newSelectedMains = [...selectedMains, item];
         setSelectedMains(newSelectedMains);
+
         if (newSelectedMains.length < mainCourseCount) {
+            // This is for intermediate selections (e.g., first item of two)
+            showToast(t('firstMealSelected'));
             setStep(step + 1);
         } else {
+            // This is for the final main course selection
+            if (mainCourseCount > 1) {
+                showToast(t('secondMealSelected'));
+            }
+            
             setStep(step + 1); // Move to gift selection
+            
+            if (giftItemOptions.length > 0) {
+                 // Delay to show after the "meal selected" toast
+                 setTimeout(() => showToast(t('nowSelectGift')), mainCourseCount > 1 ? 1200 : 500);
+            }
         }
     };
 
     const handleSelectGift = (item: MenuItem) => {
         setSelectedGift(item);
-        // This is the last step, user will click a button to confirm
+        showToast(t('giftSelected'));
     };
 
     const handleAddToCart = () => {

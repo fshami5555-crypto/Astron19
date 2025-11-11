@@ -23,7 +23,6 @@ export const useTranslation = () => {
     { path: '/offers', label: t('navOffers') },
     { path: '/deals', label: t('navDeals') },
     { path: '/about', label: t('navAbout') },
-    { path: '/gallery', label: t('navGallery') },
     { path: '/contact', label: t('navContact') },
   ];
 

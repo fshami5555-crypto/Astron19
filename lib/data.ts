@@ -290,39 +290,38 @@ export const initialOffers: Offer[] = [
     title: { ar: 'عشاء لشخصين', en: 'Dinner for Two' },
     description: { ar: 'استمتع بوجبة عشاء رومانسية لشخصين تشمل طبق رئيسي من اختيارك، طبق مقبلات للمشاركة، وحلويات مميزة بسعر خاص.', en: 'Enjoy a romantic dinner for two including a main course of your choice, a shared appetizer, and special desserts at a special price.' },
     image: 'https://picsum.photos/seed/dinnerdeal/500/350',
+    isActive: false,
   },
   {
     id: 'offer2',
     title: { ar: 'غداء عمل', en: 'Business Lunch' },
     description: { ar: 'احصل على قائمة غداء عمل متكاملة من الأحد إلى الخميس، تشمل طبق رئيسي، سلطة، ومشروب غازي بسعر لا يصدق.', en: 'Get a full business lunch menu from Sunday to Thursday, including a main course, salad, and a soft drink at an incredible price.' },
     image: 'https://picsum.photos/seed/businesslunch/500/350',
+    isActive: false,
   },
 ];
 
 export const initialDailyDeals: Offer[] = [
   {
     id: 'deal1',
-    title: { ar: "عرض أيام الأسبوع", en: "Weekday Deal" },
-    description: { ar: "اشتري وجبتين رئيسيتين واحصل على (طبق سلطة أو عصير أو شوربة) مجاناً من اختيارك.", en: "Buy two main courses and get a free item of your choice (salad, juice, or soup)." },
+    title: { ar: "كومبو لشخصين مع هدية", en: "Combo for Two with a Gift" },
+    description: { ar: "اختر وجبتين كومبو واحصل على طبق سلطة أو شوربة أو مقبلات مجاناً من اختيارك.", en: "Choose two combo meals and get a free item of your choice (salad, soup, or appetizer)." },
     image: 'https://picsum.photos/seed/weekdaydeal/500/350',
-    activeDays: [0, 1, 2, 3, 4], // Sun, Mon, Tue, Wed, Thu
-    availabilityText: { ar: "متوفر من الأحد إلى الخميس", en: "Available Sunday to Thursday" },
+    isActive: false,
     rules: {
       mainCourseCount: 2,
-      giftOptions: ['salad-grilled-caesar', 'soup-broccoli', 'drink-lkp-juice']
+      giftOptions: ['salad-grilled-caesar', 'soup-broccoli', 'appetizer-cheesy-mushroom']
     }
   },
   {
     id: 'deal2',
-    title: { ar: "عرض الغداء", en: "Lunch Special" },
-    description: { ar: "اشتري وجبة رئيسية واحدة واحصل على (طبق سلطة أو عصير أو شوربة) مجاناً من اختيارك.", en: "Buy one main course and get a free item of your choice (salad, juice, or soup)." },
+    title: { ar: "عرض غداء الموظفين", en: "Employee Lunch Offer" },
+    description: { ar: "اختر وجبة رئيسية واحدة واحصل على طبق سلطة أو شوربة أو مقبلات مجاناً من اختيارك.", en: "Choose one main course and get a free item of your choice (salad, soup, or appetizer)." },
     image: 'https://picsum.photos/seed/lunchspecial/500/350',
-    activeDays: [0, 1, 2, 3, 4], // Sun, Mon, Tue, Wed, Thu
-    timeRange: { start: 13, end: 17 }, // 1 PM to 5 PM
-    availabilityText: { ar: "متوفر من الأحد إلى الخميس، من 1 ظهراً إلى 5 مساءً", en: "Available Sunday to Thursday, from 1 PM to 5 PM" },
+    isActive: false,
     rules: {
       mainCourseCount: 1,
-      giftOptions: ['salad-grilled-caesar', 'soup-broccoli', 'drink-lkp-juice']
+      giftOptions: ['salad-grilled-caesar', 'soup-broccoli', 'appetizer-cheesy-mushroom']
     }
   },
   {
@@ -330,8 +329,7 @@ export const initialDailyDeals: Offer[] = [
     title: { ar: "عرض نهاية الأسبوع العائلي", en: "Weekend Family Deal" },
     description: { ar: "اشتري وجبتين رئيسيتين واحصل على وجبة أطفال مجاناً.", en: "Buy two main courses and get a free kids' meal." },
     image: 'https://picsum.photos/seed/weekenddeal/500/350',
-    activeDays: [5, 6], // Fri, Sat
-    availabilityText: { ar: "متوفر يومي الجمعة والسبت", en: "Available Friday and Saturday" },
+    isActive: false,
     rules: {
       mainCourseCount: 2,
       giftOptions: ['gift_kids_tenders']

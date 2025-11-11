@@ -8,7 +8,6 @@ import Menu from './components/Menu';
 import Offers from './components/Offers';
 import DailyDeals from './components/DailyDeals';
 import About from './components/About';
-import Gallery from './components/Gallery';
 import Contact from './components/Contact';
 import Login from './components/Login';
 import AdminLayout from './components/admin/AdminLayout';
@@ -71,7 +70,6 @@ const AppContent: React.FC = () => {
                     <Route path="/deals" element={<DailyDeals />} />
                     <Route path="/deals/:dealId" element={<DealDetail />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/gallery" element={<Gallery />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/login" element={<Login />} />
                     <Route

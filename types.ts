@@ -20,10 +20,7 @@ export interface Offer {
   title: TranslatableString;
   description: TranslatableString;
   image: string;
-  // Optional fields for time-based daily deals
-  activeDays?: number[]; // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-  timeRange?: { start: number; end: number }; // 24-hour format, e.g., { start: 13, end: 17 } for 1 PM to 5 PM
-  availabilityText?: TranslatableString;
+  isActive: boolean;
   // Rules for interactive deals
   rules?: {
     mainCourseCount: number;

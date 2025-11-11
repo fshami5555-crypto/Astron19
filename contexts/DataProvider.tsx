@@ -26,6 +26,7 @@ interface DataContextType {
   addDailyDeal: (deal: Omit<Offer, 'id'>) => Promise<void>;
   updateDailyDeal: (deal: Offer) => Promise<void>;
   deleteDailyDeal: (dealId: string) => Promise<void>;
+  updateDealStatus: (dealId: string, isActive: boolean) => Promise<void>;
   // Promo Codes
   addPromoCode: (promo: Omit<PromoCode, 'id'>) => Promise<void>;
   updatePromoCode: (promo: PromoCode) => Promise<void>;
@@ -209,6 +210,10 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         await setDoc(orderRef, { status }, { merge: true });
     };
 
+    const updateDealStatus = async (dealId: string, isActive: boolean) => {
+        await updateDocument('dailyDeals', dealId, { isActive });
+    };
+
     const value = {
         menuItems: parsedMenuItems, 
         dailyDeals, 
@@ -228,6 +233,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         addDailyDeal: (deal) => addDocument('dailyDeals', deal),
         updateDailyDeal: (deal) => updateDocument('dailyDeals', deal.id, deal),
         deleteDailyDeal: (id) => deleteDocument('dailyDeals', id),
+        updateDealStatus,
         addPromoCode: (promo) => addDocument('promoCodes', promo),
         updatePromoCode: (promo) => updateDocument('promoCodes', promo.id, promo),
         deletePromoCode: (id) => deleteDocument('promoCodes', id),

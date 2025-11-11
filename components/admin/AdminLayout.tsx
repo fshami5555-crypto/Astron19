@@ -12,8 +12,8 @@ import ManagePromoCodes from './ManagePromoCodes';
 import ManageLoyalty from './ManageLoyalty';
 import ManageAbout from './ManageAbout';
 import ManageContact from './ManageContact';
-import ManageGallery from './ManageGallery';
 import ManageFooter from './ManageFooter';
+import ManageDealStatus from './ManageDealStatus';
 
 const AdminLayout: React.FC = () => {
     const { t } = useTranslation();
@@ -22,6 +22,7 @@ const AdminLayout: React.FC = () => {
         { path: '/admin', label: t('dashboard'), exact: true },
         { path: '/admin/menu', label: t('manageMenu') },
         { path: '/admin/deals', label: t('manageDeals') },
+        { path: '/admin/deal-status', label: t('manageDealStatus') },
         { path: '/admin/users', label: t('manageUsers') },
         { path: '/admin/orders', label: t('manageOrders') },
         { path: '/admin/promo-codes', label: t('managePromoCodes') },
@@ -29,7 +30,6 @@ const AdminLayout: React.FC = () => {
         { path: '/admin/site-settings', label: t('manageSiteSettings') },
         { path: '/admin/about', label: t('aboutTitle') },
         { path: '/admin/contact', label: t('contactTitle') },
-        { path: '/admin/gallery', label: t('galleryTitle') },
         { path: '/admin/footer-settings', label: t('manageFooter') },
     ];
 
@@ -64,6 +64,7 @@ const AdminLayout: React.FC = () => {
                     <Route path="/" element={<AdminDashboard />} />
                     <Route path="menu" element={<ManageContent type="menuItems" />} />
                     <Route path="deals" element={<ManageContent type="dailyDeals" />} />
+                    <Route path="deal-status" element={<ManageDealStatus />} />
                     <Route path="users" element={<ManageUsers />} />
                     <Route path="orders" element={<ManageOrders />} />
                     <Route path="promo-codes" element={<ManagePromoCodes />} />
@@ -71,7 +72,6 @@ const AdminLayout: React.FC = () => {
                     <Route path="site-settings" element={<SiteSettings />} />
                     <Route path="about" element={<ManageAbout />} />
                     <Route path="contact" element={<ManageContact />} />
-                    <Route path="gallery" element={<ManageGallery />} />
                     <Route path="footer-settings" element={<ManageFooter />} />
                 </Routes>
             </main>

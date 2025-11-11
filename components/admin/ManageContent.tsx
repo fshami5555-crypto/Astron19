@@ -143,7 +143,7 @@ const MenuItemModal: React.FC<{
   );
 };
 
-// Deal Modal (for Offers) - Simplified for editing text and image
+// Deal Modal (for Offers)
 const DealModal: React.FC<{
     item: Offer | null;
     closeModal: () => void;
@@ -151,10 +151,16 @@ const DealModal: React.FC<{
     updateDailyDeal: (item: Offer) => Promise<void>;
     t: (key: string) => string;
 }> = ({ item, closeModal, addDailyDeal, updateDailyDeal, t }) => {
-    const [formData, setFormData] = useState<Partial<Offer>>({});
+    const [formData, setFormData] = useState<Omit<Offer, 'id'>>({
+        title: { ar: '', en: '' },
+        description: { ar: '', en: '' },
+        image: '',
+        isActive: false,
+        rules: { mainCourseCount: 1, giftOptions: [] }
+    });
 
     useEffect(() => {
-        if(item) {
+        if (item) {
             setFormData(item);
         }
     }, [item]);
@@ -168,37 +174,57 @@ const DealModal: React.FC<{
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
-    }
+    };
+
+    const handleRulesChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        const currentRules = formData.rules || { mainCourseCount: 0, giftOptions: [] };
+        
+        let newRules = { ...currentRules };
+        if (name === 'mainCourseCount') {
+            newRules.mainCourseCount = parseInt(value, 10) || 0;
+        } else if (name === 'giftOptions') {
+            newRules.giftOptions = value.split(',').map(s => s.trim()).filter(Boolean);
+        }
+        
+        setFormData(prev => ({ ...prev, rules: newRules }));
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (item) {
-            updateDailyDeal({ ...item, ...formData });
+            updateDailyDeal({ ...formData, id: item.id });
         } else {
-            // NOTE: Adding a new deal via the UI is complex due to `rules` and `activeDays`.
-            // This simplified form only adds basic details. Further configuration in code might be needed.
-            const newDealData: Omit<Offer, 'id'> = {
-                title: { ar: '', en: '' },
-                description: { ar: '', en: '' },
-                image: '',
-                ...formData
-            };
-            addDailyDeal(newDealData);
+            addDailyDeal(formData);
         }
         closeModal();
     };
 
     return (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-            <div className="bg-gray-800 p-8 rounded-lg w-full max-w-2xl">
+            <div className="bg-gray-800 p-8 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                  <h2 className="text-2xl font-bold text-amber-500 mb-6">{item ? t('editItem') : t('addNewItem')}</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <TranslatableInput label="Title" name="title" value={formData.title || {ar:'', en:''}} onChange={handleTranslatableChange} required />
-                    <TranslatableInput label="Description" name="description" value={formData.description || {ar:'', en:''}} onChange={handleTranslatableChange} required isTextArea/>
+                    <TranslatableInput label="Title" name="title" value={formData.title} onChange={handleTranslatableChange} required />
+                    <TranslatableInput label="Description" name="description" value={formData.description} onChange={handleTranslatableChange} required isTextArea/>
                     <div>
                         <label htmlFor="image" className="block text-sm font-medium text-gray-300">{t('imageUrl')}</label>
-                        <input type="url" id="image" name="image" value={formData.image || ''} onChange={handleChange} required className="mt-1 w-full bg-gray-700 rounded p-2 text-white" />
+                        <input type="url" id="image" name="image" value={formData.image} onChange={handleChange} required className="mt-1 w-full bg-gray-700 rounded p-2 text-white" />
                     </div>
+
+                    <div className="border-t border-gray-700 pt-4 mt-4">
+                        <h3 className="text-lg font-semibold text-white mb-2">Deal Rules (for interactive deals)</h3>
+                        <p className="text-sm text-gray-400 mb-4">Leave these fields empty or 0 if the deal is not interactive.</p>
+                        <div>
+                            <label htmlFor="mainCourseCount" className="block text-sm font-medium text-gray-300">Main Items to Select</label>
+                            <input type="number" id="mainCourseCount" name="mainCourseCount" value={formData.rules?.mainCourseCount || 0} onChange={handleRulesChange} className="mt-1 w-full bg-gray-700 rounded p-2 text-white" />
+                        </div>
+                         <div>
+                            <label htmlFor="giftOptions" className="block text-sm font-medium text-gray-300 mt-4">Gift Item IDs (comma-separated)</label>
+                            <textarea id="giftOptions" name="giftOptions" value={formData.rules?.giftOptions?.join(', ') || ''} onChange={handleRulesChange} rows={3} className="mt-1 w-full bg-gray-700 rounded p-2 text-white" placeholder="item-id-1, item-id-2, item-id-3"></textarea>
+                        </div>
+                    </div>
+
                      <div className="flex justify-end gap-4 pt-4">
                         <button type="button" onClick={closeModal} className="bg-gray-600 text-white font-bold py-2 px-4 rounded">{t('cancel')}</button>
                         <button type="submit" className="bg-amber-500 text-white font-bold py-2 px-4 rounded">{t('save')}</button>

@@ -37,9 +37,6 @@ const HomeDealCard: React.FC<{ deal: Offer }> = ({ deal }) => {
             <div className="p-6">
                 <h3 className="text-2xl font-bold text-white">{deal.title[language]}</h3>
                 <p className="mt-2 text-gray-400">{deal.description[language]}</p>
-                {!isActive && deal.availabilityText && (
-                    <p className="mt-3 text-sm text-amber-400 font-semibold">{deal.availabilityText[language]}</p>
-                )}
             </div>
         </button>
     );
@@ -68,24 +65,6 @@ const Home: React.FC = () => {
           {t('viewMenu')}
         </Link>
       </HeroSection>
-
-      {/* About Us Snippet */}
-      <section className="py-20 bg-[#1f1f1f]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-          <div className={`text-center ${language === 'ar' ? 'md:text-right' : 'md:text-left'}`}>
-            <h2 className="text-4xl font-bold font-display text-amber-500">{t('ourStoryTitle')}</h2>
-            <p className="mt-4 text-gray-400 leading-relaxed">
-              {settings.aboutSnippet[language]}
-            </p>
-            <Link to="/about" className="mt-6 inline-block text-amber-500 font-semibold hover:text-amber-400">
-              {t('readMore')} {language === 'ar' ? <>&larr;</> : <>&rarr;</>}
-            </Link>
-          </div>
-           <div className={language === 'ar' ? 'md:order-first' : ''}>
-            <img src={settings.aboutImageUrl} alt="Restaurant Interior" className="rounded-lg shadow-2xl w-full h-auto object-cover" />
-          </div>
-        </div>
-      </section>
       
       {/* Featured Dishes Section */}
       <section className="py-20 bg-[#1a1a1a]">
